@@ -1,0 +1,56 @@
+# simple.world - basic world file example
+# Authors: Richard Vaughan
+# $Id$
+
+include "/usr/local/playerstage/share/stage/worlds/pioneer.inc"
+include "/usr/local/playerstage/share/stage/worlds/map.inc"
+include "/usr/local/playerstage/share/stage/worlds/sick.inc"
+
+interval_sim 100  # simulation timestep in milliseconds
+interval_real 20  # real-time interval between simulation updates in milliseconds 
+
+# time to pause (in GUI mode) or quit (in headless mode (-g)) the simulation
+quit_time 3600 # 1 hour of simulated time
+
+paused 0
+
+resolution 0.02
+
+# configure the GUI window
+window
+(
+  size [ 635.000 666.000 ] # in pixels
+  scale 37.481            
+     # pixels per meter
+  center [ -0.019  -0.282 ]
+  rotate [ 38.000  110.500 ]
+  			
+  show_data 1              # 1=on 0=off
+)
+
+# load an environment bitmap
+floorplan
+( 
+  name "singleObjectWorld"
+  size [16.000 16.000 0.800]
+  pose [0 0 0 0]
+  bitmap "singleObjectWorld.png"
+  
+  # runs the <stage_source>/examples/ctrl/rasterize.cc example
+  # ctrl "rasterize"
+)
+
+
+pioneer2dx
+(		  
+  # can refer to the robot by this name
+  name "r0"
+  pose [ -7.646 -7.592 0 45.000 ] 
+
+  sicklaser() 
+
+  # report error-free position in world coordinates
+  localization "gps"
+  localization_origin [ 0 0 0 0 ]
+)
+
